@@ -1,0 +1,48 @@
+@startuml
+
+class Transaction {
+    -merchant: String
+    -amount: double
+    -location: String
+    +Transaction(merchant: String, amount: double, location: String)
+    +getMerchant(): String
+    +getAmount(): double
+    +getLocation(): String
+}
+
+abstract class Checker {
+    -nextChecker: Checker
+    +setNextChecker(nextChecker: Checker): void
+    +check(transaction: Transaction): void
+}
+
+class BasicChecks extends Checker {
+    +check(transaction: Transaction): void
+}
+
+class GeographyAnomalyCheck extends Checker {
+    +check(transaction: Transaction): void
+}
+
+class BlacklistedMerchantCheck extends Checker {
+    -BLACKLISTED_MERCHANTS: String[]
+    +check(transaction: Transaction): void
+}
+
+class HighRiskTransactionCheck extends Checker {
+    +check(transaction: Transaction): void
+}
+
+class FraudDetectionSystem {
+    +main(args: String[]): void
+}
+
+Checker <|-- BasicChecks
+Checker <|-- GeographyAnomalyCheck
+Checker <|-- BlacklistedMerchantCheck
+Checker <|-- HighRiskTransactionCheck
+
+FraudDetectionSystem --> Transaction
+FraudDetectionSystem --> Checker
+
+@enduml

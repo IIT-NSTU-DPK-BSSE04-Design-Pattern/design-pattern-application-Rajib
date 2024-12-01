@@ -1,0 +1,36 @@
+@startuml
+
+' Define the XMLData interface
+interface XMLData {
+    + readXMLData(): void
+}
+
+' Define the JSONData interface
+interface JSONData {
+    + readJSONData(): void
+}
+
+class XMLDataSoftware{
+    +readXMLData():void
+}
+
+class JSONDataSoftware{
+    +readJSONData():void
+}
+
+' Define the XMLToJSONDataAdapter class
+class XMLToJSONDataAdapter {
+    - xmlData: XMLData
+    + XMLToJSONDataAdapter(xmlData: XMLData)
+    + readJSONData(): void
+}
+
+' Relationships between the classes
+XMLToJSONDataAdapter ..|> JSONData : implements
+XMLToJSONDataAdapter --> XMLData : adapts
+
+XMLDataSoftware ..> XMLData : implements
+JSONDataSoftware ..> JSONData : implements
+
+
+@enduml
